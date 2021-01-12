@@ -1,4 +1,4 @@
-class ResponseListOfRecipesDto {
+class ResponseRecipePuppyDto {
   title: string;
   href: string;
   ingredients: string;
@@ -6,5 +6,5 @@ class ResponseListOfRecipesDto {
 }
 
 export {
-  ResponseListOfRecipesDto
+  ResponseRecipePuppyDto
 };

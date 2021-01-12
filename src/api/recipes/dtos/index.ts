@@ -1,7 +1,11 @@
-import { ResponseListOfRecipesDto } from './response-list-of-recipes.dto';
-import { ResponseDataDto } from './response-data.dto';
+import { ResponseRecipePuppyDto } from './response-recipe-puppy.dto';
+import { ResponseDataPuppyDto } from './response-data-puppy.dto';
+import { RecipeDto } from './recipe.dto';
+import { ResponseGetRecipesDto } from './response-get-recipes.dto copy';
 
 export {
-  ResponseListOfRecipesDto,
-  ResponseDataDto,
+  ResponseRecipePuppyDto,
+  ResponseDataPuppyDto,
+  RecipeDto,
+  ResponseGetRecipesDto,
 };

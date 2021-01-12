@@ -1,8 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { RecipesRepository } from '../recipes.repository';
 import {
-  ResponseDataDto,
-  ResponseListOfRecipesDto
+  ResponseDataPuppyDto,
+  ResponseRecipePuppyDto,
+  RecipeDto,
+  ResponseGetRecipesDto,
 } from '../dtos';
 
 @Injectable()
@@ -11,39 +13,20 @@ export class GetRecipesByIngredientsService {
   constructor(private readonly recipesRepository: RecipesRepository) {
   }
 
-  async getRecipesByIngredients(ingredients: string): Promise<any> {
+  private transformStringOfIngredientsInArray(ingredients: string, separator: string): string[] {
+    return ingredients.split(separator);
+  }
+
+  private async findGifByTitle(title: string): Promise<string> {
     try {
-      const responseData: ResponseDataDto = await this.findRecipesInPuppy(ingredients);
-      const arrayOfIgredients: string[] = this.transformStringOfIngredientsInArray(ingredients, ',');
-      const serializedRecipes: any = await this.serializeResponse(responseData.results);
-      return {
-        keywords: arrayOfIgredients,
-        recipes: serializedRecipes,
-      };
+      const responseData: any = (await this.recipesRepository.findGifByTitle(title).toPromise()).data.data;
+      return responseData && responseData[0] ? responseData[0].url : '';
     } catch (error) {
-      return Promise.reject({ message: error.message || 'Error to find recipes'});
+      return Promise.reject({ message: 'Error to find gif in GIPHY'});
     }
   }
 
-  private async findRecipesInPuppy(ingredients: string): Promise<ResponseDataDto> {
-    try {
-      const responseData: ResponseDataDto = (await this.recipesRepository.findRecipesByIngredients(ingredients).toPromise()).data;
-      return responseData;
-    } catch (error) {
-      return Promise.reject({ message: 'Error to find recipes in PUPPY'});
-    }
-  }
-
-  private async serializeResponse(responseListOfRecipes: ResponseListOfRecipesDto[]): Promise<any> {
-    const response = [];
-    for (const responseListOfRecipe of responseListOfRecipes) {
-      const recipe: ResponseListOfRecipesDto = await this.serializeRecipe(responseListOfRecipe);
-      response.push(recipe);
-    }
-    return response;
-  }
-
-  private async serializeRecipe(recipe: ResponseListOfRecipesDto): Promise<any> {
+  private async serializeRecipe(recipe: ResponseRecipePuppyDto): Promise<RecipeDto> {
     const { title, href, ingredients } = recipe;
     const arrayOfIngredients: string[] = this.transformStringOfIngredientsInArray(ingredients, ' ');
     return {
@@ -54,16 +37,35 @@ export class GetRecipesByIngredientsService {
     };
   }
 
-  private async findGifByTitle(title: string): Promise<any> {
+  private async serializeResponse(responseListOfRecipesPuppy: ResponseRecipePuppyDto[]): Promise<RecipeDto[]> {
+    const recipes: RecipeDto[] = [];
+    for (const recipePuppy of responseListOfRecipesPuppy) {
+      const recipe: RecipeDto = await this.serializeRecipe(recipePuppy);
+      recipes.push(recipe);
+    }
+    return recipes;
+  }
+
+  private async findRecipesInPuppy(ingredients: string): Promise<ResponseDataPuppyDto> {
     try {
-      const responseData: any = (await this.recipesRepository.findGifByTitle(title).toPromise()).data.data;
-      return responseData && responseData[0] ? responseData[0].url : '';
+      const responseData: ResponseDataPuppyDto = (await this.recipesRepository.findRecipesByIngredients(ingredients).toPromise()).data;
+      return responseData;
     } catch (error) {
-      return Promise.reject({ message: 'Error to find gif in GIPHY'});
+      return Promise.reject({ message: 'Error to find recipes in PUPPY'});
     }
   }
 
-  private transformStringOfIngredientsInArray(ingredients: string, separator: string): string[] {
-    return ingredients.split(separator);
+  async getRecipesByIngredients(ingredients: string): Promise<ResponseGetRecipesDto> {
+    try {
+      const responseData: ResponseDataPuppyDto = await this.findRecipesInPuppy(ingredients);
+      const serializedRecipes: any = await this.serializeResponse(responseData.results);
+      const arrayOfIngredients: string[] = this.transformStringOfIngredientsInArray(ingredients, ',');
+      return {
+        keywords: arrayOfIngredients,
+        recipes: serializedRecipes,
+      };
+    } catch (error) {
+      return Promise.reject({ message: error.message || 'Error to find recipes'});
+    }
   }
 }

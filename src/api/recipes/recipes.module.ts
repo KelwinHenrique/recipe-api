@@ -12,4 +12,4 @@ import { ConfigModule } from '../config/config.module';
     RecipesRepository,
   ],
 })
-export class RecipeModule { }
+export class RecipesModule { }

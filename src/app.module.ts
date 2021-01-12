@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { RecipeModule } from './api/recipes/recipe.module';
+import { RecipesModule } from './api/recipes/recipes.module';
 
 @Module({
-  imports: [RecipeModule],
+  imports: [RecipesModule],
   controllers: [],
   providers: [],
 })

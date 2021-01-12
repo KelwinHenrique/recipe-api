@@ -7,6 +7,9 @@ import {
 import {
   GetRecipesByIngredientsService,
 } from './services';
+import {
+  ResponseGetRecipesDto
+} from './dtos';
 
 @Controller('recipes')
 export class RecipesController {
@@ -18,7 +21,7 @@ export class RecipesController {
   @Get()
   async getRecipesByIngredients(
     @Query('i') ingredients: string
-  ): Promise<any> {
+  ): Promise<ResponseGetRecipesDto> {
     try {
       return await this.getRecipesByIngredientsService.getRecipesByIngredients(ingredients);
     } catch (error) {
