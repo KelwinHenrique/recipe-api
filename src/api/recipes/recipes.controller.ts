@@ -2,6 +2,7 @@ import {
   Controller,
   Get,
   BadRequestException,
+  Query,
 } from '@nestjs/common';
 import {
   GetRecipesByIngredientsService,
@@ -15,9 +16,11 @@ export class RecipesController {
   ) { }
 
   @Get()
-  async getRecipesByIngredients(): Promise<any> {
+  async getRecipesByIngredients(
+    @Query('i') ingredients: string
+  ): Promise<any> {
     try {
-      return await this.getRecipesByIngredientsService.getRecipesByIngredients();
+      return await this.getRecipesByIngredientsService.getRecipesByIngredients(ingredients);
     } catch (error) {
       throw new BadRequestException(error.message);
     }
