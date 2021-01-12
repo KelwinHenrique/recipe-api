@@ -49,8 +49,18 @@ export class GetRecipesByIngredientsService {
     return {
       title,
       link: href,
-      ingredients: arrayOfIngredients.sort()
+      ingredients: arrayOfIngredients.sort(),
+      gif: await this.findGifByTitle(title),
     };
+  }
+
+  private async findGifByTitle(title: string): Promise<any> {
+    try {
+      const responseData: any = (await this.recipesRepository.findGifByTitle(title).toPromise()).data.data;
+      return responseData && responseData[0] ? responseData[0].url : '';
+    } catch (error) {
+      return Promise.reject({ message: 'Error to find gif in GIPHY'});
+    }
   }
 
   private transformStringOfIngredientsInArray(ingredients: string, separator: string): string[] {
