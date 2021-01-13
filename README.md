@@ -6,7 +6,7 @@ This api contains:
 
 - Unit and integration tests;
 - Based on clean architecture;
-- [Documentation.](https://github.com/KelwinHenrique/CrawlerGetProductsML/blob/master/DOCS.md)
+- [Documentation.](https://github.com/KelwinHenrique/recipe-api/blob/main/DOCS.md)
 - Docker
 
 ## How to run the project with docker
