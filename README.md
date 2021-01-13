@@ -11,11 +11,13 @@ This api contains:
 
 ## How to run the project with docker
 
-1) Update .env with your environments variables;
+1) Acreate a key to access the Giphy Api, for that [click here](https://developers.giphy.com/docs/api#quick-start-guide);
 
-2) Run in the root project `sudo docker-compose up` to initialize the container.
+2) Update .env with your environments variables;
 
-3) Run the comand bellow in your terminal:
+3) Run in the root project `sudo docker-compose up` to initialize the container.
+
+4) Run the comand bellow in your terminal:
 ```json
   curl -H "Content-Type: application/json" -X GET http://localhost:8080/recipes?i=tomato,apple
 ```
