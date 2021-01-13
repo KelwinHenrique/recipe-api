@@ -1,73 +1,65 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
+# Recipe API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Given a list of ingredients, return the recipes using those ingredients.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+This api contains:
 
-## Description
+- Unit and integration tests;
+- Based on clean architecture;
+- [Documentation.](https://github.com/KelwinHenrique/CrawlerGetProductsML/blob/master/DOCS.md)
+- Docker
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## How to run the project with docker
 
-## Installation
+1) Update .env with your environments variables;
+
+2) Run in the root project `sudo docker-compose up` to initialize the container.
+
+3) Run the comand bellow in your terminal:
+```json
+  curl -H "Content-Type: application/json" -X GET http://localhost:8080/recipes?i=tomato,apple
+```
+Or access [this url](https://github.com/KelwinHenrique/recipe-api/blob/main/DOCS.md) in your broswer.
+
+## How to run tests
+
+Run `npm run test` to execute all tests of the api.
+
+## How to run documentation
+
+1) Run `npm run docs` to create the documentation.
+
+2) Enter the folder coverage/lcov-report and execute index.html
+
+3) Or you can click [here](https://github.com/KelwinHenrique/recipe-api/blob/main/DOCS.md)
+
+## Architecture
 
 ```bash
-$ npm install
+├── src
+│   ├── api
+│   │   ├── recipes
+│   │   │   ├── services
+│   │   │   │   ├── get-recipes-by-ingredients.service.ts
+│   │   │   │   │── get-recipes-by-ingredients.spec.ts
+│   │   │   │   │── index.ts
+│   │   │   ├── dtos
+│   │   │   │   ├── recipe.dto.ts
+│   │   │   │   ├── response-data-puppy.dto.ts
+│   │   │   │   ├── response-recipe-puppy.dto.ts
+│   │   │   │   │── index.ts
+│   │   │   ├── recipes.controller.ts
+│   │   │   ├── recipes.module.ts
+│   │   │   ├── recipes.repository.ts
+│   │   ├── config
+│   │   │   ├── config.module.ts
+│   │   │   ├── config.service.ts
+│   ├── app.module.ts
+│   ├── main.ts
 ```
 
-## Running the app
+## Main Dependencies
 
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+- nestjs: Web framework.
+- jest and supertest: Unit test and integration test.
+- apiDoc and apidoc-markdown: To create documentation for this API.
