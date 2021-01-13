@@ -11,7 +11,7 @@ This api contains:
 
 ## How to run the project with docker
 
-1) Acreate a key to access the Giphy Api, for that [click here](https://developers.giphy.com/docs/api#quick-start-guide);
+1) Create a key to access the Giphy Api, for that [click here](https://developers.giphy.com/docs/api#quick-start-guide);
 
 2) Update .env with your environments variables;
 
