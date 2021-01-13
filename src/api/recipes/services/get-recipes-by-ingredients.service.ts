@@ -19,10 +19,10 @@ export class GetRecipesByIngredientsService {
 
   private async findGifByTitle(title: string): Promise<string> {
     try {
-      const responseData: any = (await this.recipesRepository.findGifByTitle(title).toPromise()).data.data;
+      const responseData: any = (await this.recipesRepository.findGifByTitle(title)).data.data;
       return responseData && responseData[0] ? responseData[0].url : '';
     } catch (error) {
-      return Promise.reject({ message: 'Error to find gif in GIPHY'});
+      return Promise.reject({ messageError: 'Error to find gif in GIPHY'});
     }
   }
 
@@ -48,10 +48,10 @@ export class GetRecipesByIngredientsService {
 
   private async findRecipesInPuppy(ingredients: string): Promise<ResponseDataPuppyDto> {
     try {
-      const responseData: ResponseDataPuppyDto = (await this.recipesRepository.findRecipesByIngredients(ingredients).toPromise()).data;
+      const responseData: ResponseDataPuppyDto = (await this.recipesRepository.findRecipesByIngredients(ingredients)).data;
       return responseData;
     } catch (error) {
-      return Promise.reject({ message: 'Error to find recipes in PUPPY'});
+      return Promise.reject({ messageError: 'Error to find recipes in PUPPY'});
     }
   }
 
@@ -65,7 +65,7 @@ export class GetRecipesByIngredientsService {
         recipes: serializedRecipes,
       };
     } catch (error) {
-      return Promise.reject({ message: error.message || 'Error to find recipes'});
+      return Promise.reject({ message: error.messageError || 'Error to find recipes'});
     }
   }
 }
